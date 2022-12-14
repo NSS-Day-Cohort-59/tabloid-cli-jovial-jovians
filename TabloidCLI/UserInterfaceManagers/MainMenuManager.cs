@@ -9,7 +9,7 @@ namespace TabloidCLI.UserInterfaceManagers
 
         public IUserInterfaceManager Execute()
         {
-            Console.WriteLine("Generic pleasnt greeting");
+            Console.WriteLine("Generic pleasant greeting");
             Console.WriteLine("-----------------------------");
             Console.WriteLine("Main Menu");
 
