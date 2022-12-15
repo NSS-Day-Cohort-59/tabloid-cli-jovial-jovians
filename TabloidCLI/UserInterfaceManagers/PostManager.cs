@@ -75,26 +75,26 @@ namespace TabloidCLI.UserInterfaceManagers
             }
             Console.WriteLine();
 
-            Console.Write("Edit title (blank to leave unchanged: ");
+            Console.Write("Edit title (blank to leave unchanged) : ");
             string title = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(title))
             {
                 postToEdit.Title = title;
             }
 
-            Author authorToEdit = ChooseAuthor("Edit author (blank to leave unchanged: ");
+            Author authorToEdit = ChooseAuthor("Edit author (blank to leave unchanged) : ");
             postToEdit.Author = authorToEdit;
 
-            Blog blogToEdit = ChooseBlog("Edit blog (blank to leave unchanged: ");
+            Blog blogToEdit = ChooseBlog("Edit blog (blank to leave unchanged) : ");
             postToEdit.Blog = blogToEdit;
             
-            Console.Write("Edit URL (blank to leave unchanged: ");
+            Console.Write("Edit URL (blank to leave unchanged) : ");
             string url = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(url))
             {
                 postToEdit.Url = url;
             }
-            Console.Write("Edit date of publication (blank to leave unchanged: ");
+            Console.Write("Edit date of publication (blank to leave unchanged) : ");
             string published = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(published))
             {
