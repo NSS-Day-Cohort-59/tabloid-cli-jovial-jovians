@@ -22,8 +22,9 @@ namespace TabloidCLI.UserInterfaceManagers
 
         public IUserInterfaceManager Execute()
         {
-            Console.WriteLine("Jourtnal Menu");
-            Console.WriteLine(" 3) Add Jurnal Entry");
+            Console.WriteLine("Journal Menu");
+            Console.WriteLine(" 2) Add Journal Entry");
+            Console.WriteLine(" 3) Remove Journal Entry");
             Console.WriteLine(" 0) Go Back");
 
             Console.Write("> ");
@@ -31,8 +32,17 @@ namespace TabloidCLI.UserInterfaceManagers
             switch (choice)
             {
                
-                case "3":
+                case "2":
                     Add();
+                    Console.WriteLine("");
+                    Console.WriteLine("Great! Entry added to journal.");
+                    Console.WriteLine("");
+                    return this;
+                case "3":
+                    Remove();
+                    Console.WriteLine("");
+                    Console.WriteLine("Journal entry deleted.");
+                    Console.WriteLine("");
                     return this;
                 case "0":
                     return _parentUI;
@@ -41,7 +51,6 @@ namespace TabloidCLI.UserInterfaceManagers
                     return this;
             }
         }
-
 
         private void Add()
         {
@@ -60,7 +69,20 @@ namespace TabloidCLI.UserInterfaceManagers
             _journalRepository.Insert(journal);
         }
 
+        private void Remove()
+        {
+            Console.WriteLine("Choose which entry you would like to delete:");
+            Console.WriteLine("");
 
+            foreach (Journal j in journals)
+            {
+                Console.WriteLine($"{j.Id}: {j.Title}");
+            }
+            Console.WriteLine("");
+            int journalToDelete = int.Parse(Console.ReadLine());
+            Console.WriteLine("");
+            
+            _journalRepository.Delete(journalToDelete);
+        }
     }
-
-    }
+}
