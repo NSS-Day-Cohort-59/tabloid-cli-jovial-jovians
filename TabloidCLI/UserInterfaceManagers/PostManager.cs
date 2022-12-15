@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using TabloidCLI.Models;
 using TabloidCLI.Repositories;
 
@@ -35,6 +36,9 @@ namespace TabloidCLI.UserInterfaceManagers
                 case "1":
                     List();
                     return this;
+                case "4":
+                    Edit();
+                    return this;
                 case "0":
                     return _parentUI;
                 default:
@@ -52,6 +56,58 @@ namespace TabloidCLI.UserInterfaceManagers
             }
             Console.Write("Press any key to continue...");
             Console.ReadKey();
+        }
+
+        private void Edit()
+        {
+            Post postToEdit = Choose("Which post would you like to edit?");
+            if (postToEdit == null)
+            {
+                return;
+            }
+
+            Console.WriteLine();
+            Console.Write("Edit title (blank to leave unchanged: ");
+            string title = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(title))
+            {
+                postToEdit.Title = title;
+            }
+            Console.Write("Edit author (blank to leave unchanged: ");
+            string authorName = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(authorName))
+            {
+                postToEdit.Author = new Author
+                {
+                    Id = ,
+                }
+            }
+            Console.Write("Edit blog (blank to leave unchanged: ");
+            string blogInfo = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(blogInfo))
+            {
+                postToEdit.Blog = blogInfo;
+            }
+            Console.Write("Edit URL (blank to leave unchanged: ");
+            string url = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(url))
+            {
+                postToEdit.Url = url;
+            }
+            Console.Write("Edit date of publication (blank to leave unchanged: ");
+            string published = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(published))
+            {
+                postToEdit.PublishDateTime = DateTime.Parse(published);
+            }
+
+            Console.WriteLine("");
+            Console.WriteLine("Post has been updated.");
+            Console.WriteLine("");
+            Console.Write("Press any key to continue...");
+            Console.ReadKey();
+
+            _postRepository.Update(postToEdit);
         }
     }
 }
