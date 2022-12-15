@@ -14,6 +14,7 @@ namespace TabloidCLI.UserInterfaceManagers
         private JournalRepository _journalRepository;
         private string _connectionString;
 
+
         public JournalManager(IUserInterfaceManager parentUI, string connectionString)
         {
             _parentUI = parentUI;
@@ -21,11 +22,13 @@ namespace TabloidCLI.UserInterfaceManagers
             _connectionString = connectionString;
         }
 
+
         public IUserInterfaceManager Execute()
         {
             Console.WriteLine("Journal Menu");
-            Console.WriteLine(" 2) Add Journal Entry");
-            Console.WriteLine(" 3) Remove Journal Entry");
+            Console.WriteLine(" 1) List all journal entries");
+            Console.WriteLine(" 2) Add journal entry");
+            Console.WriteLine(" 3) Remove journal entry");
             Console.WriteLine(" 0) Go Back");
 
             Console.Write("> ");
@@ -34,7 +37,6 @@ namespace TabloidCLI.UserInterfaceManagers
             {
                
                 case"1":
-                    Console.WriteLine("Work!!");
                     List();
                     return this;
                 case "2":
@@ -48,6 +50,8 @@ namespace TabloidCLI.UserInterfaceManagers
                     Console.WriteLine("");
                     Console.WriteLine("Journal entry deleted.");
                     Console.WriteLine("");
+                    Console.WriteLine("Press any key to continue...");
+                    Console.ReadKey();
                     return this;
                 case "0":
                     return _parentUI;
@@ -73,15 +77,9 @@ namespace TabloidCLI.UserInterfaceManagers
 
             _journalRepository.Insert(journal);
         }
-
-        private void Remove()
-        {
-            Console.WriteLine("Choose which entry you would like to delete:");
-            Console.WriteLine("");
-        }
         private void  List()
         {
-           List<Journal> journals = _journalRepository.GetAll();
+            List<Journal> journals = _journalRepository.GetAll();
             foreach (Journal journal in journals)
             {
                 Console.WriteLine(@$"{journal.Title}
@@ -90,6 +88,13 @@ namespace TabloidCLI.UserInterfaceManagers
             }
             Console.WriteLine("Press Enter to go back to menu");
             Console.ReadLine();
+        }
+
+        private void Remove()
+        {
+            List<Journal> journals = _journalRepository.GetAll();
+            Console.WriteLine("Choose which entry you would like to delete:");
+            Console.WriteLine("");
 
             foreach (Journal j in journals)
             {
