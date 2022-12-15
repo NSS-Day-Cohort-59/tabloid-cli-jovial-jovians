@@ -1,4 +1,5 @@
 ﻿using System;
+using TabloidCLI.Models;
 
 namespace TabloidCLI.UserInterfaceManagers
 {
@@ -6,9 +7,12 @@ namespace TabloidCLI.UserInterfaceManagers
     {
         private readonly IUserInterfaceManager _parentUI;
 
+        private TagRepository _tagRepo;
+
         public TagManager(IUserInterfaceManager parentUI, string connectionString)
         {
             _parentUI = parentUI;
+            _tagRepo = new TagRepository(connectionString);
         }
 
         public IUserInterfaceManager Execute()
@@ -51,7 +55,18 @@ namespace TabloidCLI.UserInterfaceManagers
 
         private void Add()
         {
-            throw new NotImplementedException();
+
+            Tag newTag = new Tag();
+
+            Console.WriteLine();
+            Console.Write("Enter name of new tag > ");
+            newTag.Name = Console.ReadLine();
+
+            _tagRepo.Insert(newTag);
+
+            Console.WriteLine($"New tag \"{newTag.Name}\" added!");
+            Console.ReadKey();
+            
         }
 
         private void Edit()
