@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,7 +24,8 @@ namespace TabloidCLI.UserInterfaceManagers
         public IUserInterfaceManager Execute()
         {
             Console.WriteLine("Jourtnal Menu");
-            Console.WriteLine(" 3) Add Jurnal Entry");
+            Console.WriteLine(" 1) Show All Jurnal Entries");
+            Console.WriteLine(" 2) Add Jurnal Entry");
             Console.WriteLine(" 0) Go Back");
 
             Console.Write("> ");
@@ -31,7 +33,11 @@ namespace TabloidCLI.UserInterfaceManagers
             switch (choice)
             {
                
-                case "3":
+                case"1":
+                    Console.WriteLine("Work!!");
+                    List();
+                    return this;
+                case "2":
                     Add();
                     return this;
                 case "0":
@@ -59,6 +65,22 @@ namespace TabloidCLI.UserInterfaceManagers
 
             _journalRepository.Insert(journal);
         }
+
+        private void  List()
+        {
+           List<Journal> journals = _journalRepository.GetAll();
+            foreach (Journal journal in journals)
+            {
+                Console.WriteLine(@$"{journal.Title}
+                                        {journal.Content}
+                                        Created on {journal.CreateDateTime}");
+            }
+            Console.WriteLine("Press Enter to go back to menu");
+            Console.ReadLine();
+          
+           
+        }
+      
 
 
     }
