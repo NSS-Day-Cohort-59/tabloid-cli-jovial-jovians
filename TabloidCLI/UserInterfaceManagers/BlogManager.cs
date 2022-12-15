@@ -1,27 +1,27 @@
 ﻿using System;
+using System.Collections.Generic;
 using TabloidCLI.Models;
+using TabloidCLI.Repositories;
 
 namespace TabloidCLI.UserInterfaceManagers
 {
-    public class TagManager : IUserInterfaceManager
+    public class BlogManager : IUserInterfaceManager
     {
         private readonly IUserInterfaceManager _parentUI;
+        private BlogRepository _blogRepository;
+        private string _connectionString;
 
-        private TagRepository _tagRepo;
-
-        public TagManager(IUserInterfaceManager parentUI, string connectionString)
+        public BlogManager(IUserInterfaceManager parentUI, string connectionString)
         {
             _parentUI = parentUI;
-            _tagRepo = new TagRepository(connectionString);
+            _blogRepository = new BlogRepository(connectionString);
+            _connectionString = connectionString;
         }
 
         public IUserInterfaceManager Execute()
         {
-            Console.WriteLine("Tag Menu");
-            Console.WriteLine(" 1) List Tags");
-            Console.WriteLine(" 2) Add Tag");
-            Console.WriteLine(" 3) Edit Tag");
-            Console.WriteLine(" 4) Remove Tag");
+            Console.WriteLine("Blog Menu");
+            Console.WriteLine(" 1) Add Blog");
             Console.WriteLine(" 0) Go Back");
 
             Console.Write("> ");
@@ -29,17 +29,10 @@ namespace TabloidCLI.UserInterfaceManagers
             switch (choice)
             {
                 case "1":
-                    List();
-                    return this;
-                case "2":
                     Add();
+
                     return this;
-                case "3":
-                    Edit();
-                    return this;
-                case "4":
-                    Remove();
-                    return this;
+
                 case "0":
                     return _parentUI;
                 default:
@@ -53,20 +46,28 @@ namespace TabloidCLI.UserInterfaceManagers
             throw new NotImplementedException();
         }
 
+        private Author Choose(string prompt = null)
+        {
+            throw new NotImplementedException();
+        }
+
         private void Add()
         {
+            Console.WriteLine("Enter your blog title.");
+            string blogTitle = Console.ReadLine();
+            Console.WriteLine("Enter the URL.");
+            string blogURL = Console.ReadLine();
 
-            Tag newTag = new Tag();
+            Blog newBlog = new Blog()
+            {
+                Title = blogTitle,
+                Url = blogURL
+            };
 
-            Console.WriteLine();
-            Console.Write("Enter name of new tag > ");
-            newTag.Name = Console.ReadLine();
+            _blogRepository.Insert(newBlog);
 
-            _tagRepo.Insert(newTag);
-
-            Console.WriteLine($"New tag \"{newTag.Name}\" added!");
+            Console.WriteLine("Blog saved!");
             Console.ReadKey();
-            
         }
 
         private void Edit()
