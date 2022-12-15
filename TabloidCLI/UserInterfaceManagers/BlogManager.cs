@@ -29,22 +29,7 @@ namespace TabloidCLI.UserInterfaceManagers
             switch (choice)
             {
                 case "1":
-                    Console.WriteLine("Enter your blog title.");
-                    string blogTitle = Console.ReadLine();
-                    Console.WriteLine("Enter the URL.");
-                    string blogURL = Console.ReadLine();
-
-                    Blog newBlog = new Blog()
-                    {
-                        Title = blogTitle,
-                        Url = blogURL
-                    };
-
-                    _blogRepository.Insert(newBlog);
-
-                    Console.WriteLine("Blog saved!");
-                    Console.ReadKey();
-
+                    Add();
 
                     return this;
 
@@ -68,7 +53,21 @@ namespace TabloidCLI.UserInterfaceManagers
 
         private void Add()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Enter your blog title.");
+            string blogTitle = Console.ReadLine();
+            Console.WriteLine("Enter the URL.");
+            string blogURL = Console.ReadLine();
+
+            Blog newBlog = new Blog()
+            {
+                Title = blogTitle,
+                Url = blogURL
+            };
+
+            _blogRepository.Insert(newBlog);
+
+            Console.WriteLine("Blog saved!");
+            Console.ReadKey();
         }
 
         private void Edit()
