@@ -68,6 +68,10 @@ namespace TabloidCLI.UserInterfaceManagers
             {
                 Console.WriteLine(author);
             }
+            
+            Console.WriteLine("");
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
         }
 
         private Author Choose(string prompt = null)
