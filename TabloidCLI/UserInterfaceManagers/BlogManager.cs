@@ -24,6 +24,7 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine(" 1) List Blogs");
             Console.WriteLine(" 2) Add Blog");
             Console.WriteLine(" 4) Edit Blog");
+            Console.WriteLine(" 3) Remove Blog");
             Console.WriteLine(" 0) Go Back");
 
             Console.Write("> ");
@@ -40,6 +41,11 @@ namespace TabloidCLI.UserInterfaceManagers
                     return this;
                 case "4":
                     Edit();
+
+                    return this;
+
+                case "3":
+                    Remove();
 
                     return this;
 
@@ -146,7 +152,21 @@ namespace TabloidCLI.UserInterfaceManagers
 
         private void Remove()
         {
-            throw new NotImplementedException();
+            {
+                List<Blog> blogs = _blogRepository.GetAll();
+                Console.WriteLine("Choose which blog you would like to delete:");
+                Console.WriteLine("");
+
+                foreach (Blog blog in blogs)
+                {
+                    Console.WriteLine($"{blog.Id}: {blog.Title}");
+                }
+                Console.WriteLine("");
+                int blogToDelete = int.Parse(Console.ReadLine());
+                Console.WriteLine("");
+
+                _blogRepository.Delete(blogToDelete);
+            }
         }
     }
 }
