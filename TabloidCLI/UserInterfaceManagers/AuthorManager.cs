@@ -35,7 +35,7 @@ namespace TabloidCLI.UserInterfaceManagers
                     List();
                     return this;
                 case "2":
-                    Author author = Choose();
+                    Author author = ChooseAuthor();
                     if (author == null)
                     {
                         return this;
@@ -74,7 +74,7 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.ReadKey();
         }
 
-        private Author Choose(string prompt = null)
+        private Author ChooseAuthor(string prompt = null)
         {
             if (prompt == null)
             {
@@ -124,7 +124,7 @@ namespace TabloidCLI.UserInterfaceManagers
 
         private void Edit()
         {
-            Author authorToEdit = Choose("Which author would you like to edit?");
+            Author authorToEdit = ChooseAuthor("Which author would you like to edit?");
             if (authorToEdit == null)
             {
                 return;
@@ -155,7 +155,7 @@ namespace TabloidCLI.UserInterfaceManagers
 
         private void Remove()
         {
-            Author authorToDelete = Choose("Which author would you like to remove?");
+            Author authorToDelete = ChooseAuthor("Which author would you like to remove?");
             if (authorToDelete != null)
             {
                 _authorRepository.Delete(authorToDelete.Id);
