@@ -134,9 +134,24 @@ namespace TabloidCLI.Repositories
             }
         }
 
-        public void Delete(int id)
+        public void Delete(int Id)
         {
-            throw new NotImplementedException();
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"DELETE FROM Post 
+                                         WHERE Id = @postid";
+                    cmd.Parameters.AddWithValue("@postId", Id);
+                    
+                    cmd.ExecuteNonQuery();
+                }
+                Console.WriteLine($"Post has been removed!");
+                Console.WriteLine("Press any button to continue");
+                Console.ReadLine();
+
+            }
         }
     }
 }

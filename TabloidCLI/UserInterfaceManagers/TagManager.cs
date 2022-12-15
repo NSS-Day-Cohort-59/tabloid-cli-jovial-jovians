@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Channels;
 using TabloidCLI.Models;
 using TabloidCLI.Repositories;
 
@@ -68,6 +69,37 @@ namespace TabloidCLI.UserInterfaceManagers
             }
         }
 
+        private Tag Choose(string prompt = null)
+        {
+            if (prompt == null)
+            {
+                prompt = "Please choose a Tag by the number:";
+            }
+
+            Console.WriteLine(prompt);
+
+            List<Tag> tags = _tagRepo.GetAll();
+
+            for (int i = 0; i < tags.Count; i++)
+            {
+                Tag tag = tags[i];
+                Console.WriteLine(@$" {i + 1}) {tag.Name}");
+            }
+            Console.Write("> ");
+
+            string input = Console.ReadLine();
+            try
+            {
+                int choice = int.Parse(input);
+                return tags[choice - 1];
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Invalid Selection");
+                return null;
+            }
+        }
+
         private void Add()
         {
 
@@ -86,12 +118,40 @@ namespace TabloidCLI.UserInterfaceManagers
 
         private void Edit()
         {
-            throw new NotImplementedException();
+           Tag tagToEdit = Choose("Which blog would you like to edit?");
+            if (tagToEdit == null)
+            {
+                return;
+            }
+
+            Console.WriteLine();
+            Console.Write("Edit Name (blank to leave unchanged: ");
+            string newName = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(newName))
+            {
+                tagToEdit.Name = newName;
+            }
+            _tagRepo.Update(tagToEdit);
+
         }
 
         private void Remove()
         {
-            throw new NotImplementedException();
+            {
+                List<Tag> tags = _tagRepo.GetAll();
+                Console.WriteLine("Choose which blog you would like to delete:");
+                Console.WriteLine("");
+
+                foreach (Tag tag in tags)
+                {
+                    Console.WriteLine($"{tag.Id}: {tag.Name}");
+                }
+                Console.WriteLine("");
+                int tagToDelete = int.Parse(Console.ReadLine());
+                Console.WriteLine("");
+
+                _tagRepo.Delete(tagToDelete);
+            }
         }
     }
 }
