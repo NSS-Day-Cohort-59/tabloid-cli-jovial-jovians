@@ -41,7 +41,40 @@ namespace TabloidCLI.Repositories
         }
         public Blog Get(int id)
         {
-            throw new NotImplementedException();
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT *
+                                          FROM Blog
+                                          Where Id = @id";
+                    cmd.Parameters.AddWithValue("@id", id);
+                 
+
+                    Blog blog = null;
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        if (blog == null)
+                        {
+                            blog = new Blog()
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                Title = reader.GetString(reader.GetOrdinal("Title")),
+                                Url = reader.GetString(reader.GetOrdinal("URL"))
+                                
+                            };
+                        }
+                    }
+
+                    reader.Close();
+
+                    return blog;
+                }
+            }
         }
         public void Insert(Blog blog)
         {
