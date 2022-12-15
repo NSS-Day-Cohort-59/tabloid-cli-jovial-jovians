@@ -40,7 +40,7 @@ namespace TabloidCLI.UserInterfaceManagers
                     View();
                     return this;
                 case "2":
-
+                    AddTag();
                     return this;
                 case "3":
 
@@ -61,8 +61,42 @@ namespace TabloidCLI.UserInterfaceManagers
             Blog blog = _blogRepository.Get(_blogId);
             Console.WriteLine($"Titile: {blog.Title}");
             Console.WriteLine($"Url: {blog.Url}");
-            Console.WriteLine("Press enter to go back:");
-            Console.ReadLine();
+            Console.WriteLine("Tags:");
+            foreach (Tag tag in blog.Tags)
+            {
+                Console.WriteLine(" " + tag);
+            }
+            Console.WriteLine();
+            Console.ReadKey();
+        }
+
+        private void AddTag()
+        {
+            Blog blog = _blogRepository.Get(_blogId);
+
+            Console.WriteLine($"Which tag would you like to add to {blog.Title}?");
+            List<Tag> tags = _tagRepository.GetAll();
+
+            for (int i = 0; i < tags.Count; i++)
+            {
+                Tag tag = tags[i];
+                Console.WriteLine($" {i + 1}) {tag.Name}");
+            }
+            Console.Write("> ");
+
+            string input = Console.ReadLine();
+            try
+            {
+                int choice = int.Parse(input);
+                Tag tag = tags[choice - 1];
+                _blogRepository.InsertTag(blog, tag);
+                Console.WriteLine("Tag has been added!");
+                Console.ReadKey();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Invalid Selection. Won't add any tags.");
+            }
         }
 
 

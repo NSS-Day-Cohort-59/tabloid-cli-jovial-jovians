@@ -68,6 +68,7 @@ namespace TabloidCLI.UserInterfaceManagers
             }
             Console.WriteLine();
             Console.ReadKey();
+            Console.WriteLine($"Press enter to go back");
         }
 
         private void ViewBlogPosts()
