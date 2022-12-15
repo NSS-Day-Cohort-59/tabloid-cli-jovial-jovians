@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,6 +33,10 @@ namespace TabloidCLI.UserInterfaceManagers
             switch (choice)
             {
                
+                case"1":
+                    Console.WriteLine("Work!!");
+                    List();
+                    return this;
                 case "2":
                     Add();
                     Console.WriteLine("");
@@ -73,6 +78,18 @@ namespace TabloidCLI.UserInterfaceManagers
         {
             Console.WriteLine("Choose which entry you would like to delete:");
             Console.WriteLine("");
+        }
+        private void  List()
+        {
+           List<Journal> journals = _journalRepository.GetAll();
+            foreach (Journal journal in journals)
+            {
+                Console.WriteLine(@$"{journal.Title}
+                                        {journal.Content}
+                                        Created on {journal.CreateDateTime}");
+            }
+            Console.WriteLine("Press Enter to go back to menu");
+            Console.ReadLine();
 
             foreach (Journal j in journals)
             {
