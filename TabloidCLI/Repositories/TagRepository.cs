@@ -73,6 +73,9 @@ namespace TabloidCLI
                     cmd.Parameters.AddWithValue("@name", tag.Name);
                     cmd.Parameters.AddWithValue("@id", tag.Id);
                     cmd.ExecuteNonQuery();
+                    Console.WriteLine($"Tag has been updated!");
+                    Console.WriteLine("Press any button to continue");
+                    Console.ReadLine();
                 }
             }
         }
