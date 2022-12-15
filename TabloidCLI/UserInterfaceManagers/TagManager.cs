@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using TabloidCLI.Models;
+using TabloidCLI.Repositories;
 
 namespace TabloidCLI.UserInterfaceManagers
 {
@@ -50,7 +52,20 @@ namespace TabloidCLI.UserInterfaceManagers
 
         private void List()
         {
-            throw new NotImplementedException();
+            {
+                List<Tag> tags = _tagRepo.GetAll();
+                Console.WriteLine();
+                Console.WriteLine("All Tags");
+                Console.WriteLine("------------");
+                foreach (Tag t in tags)
+                {
+                    Console.WriteLine($"{t.Id} - {t.Name}");
+
+                }
+                Console.WriteLine();
+                Console.WriteLine("Press any key to go back");
+                Console.ReadKey();
+            }
         }
 
         private void Add()
@@ -76,7 +91,21 @@ namespace TabloidCLI.UserInterfaceManagers
 
         private void Remove()
         {
-            throw new NotImplementedException();
+            {
+                List<Tag> tags = _tagRepo.GetAll();
+                Console.WriteLine("Choose which blog you would like to delete:");
+                Console.WriteLine("");
+
+                foreach (Tag tag in tags)
+                {
+                    Console.WriteLine($"{tag.Id}: {tag.Name}");
+                }
+                Console.WriteLine("");
+                int tagToDelete = int.Parse(Console.ReadLine());
+                Console.WriteLine("");
+
+                _tagRepo.Delete(tagToDelete);
+            }
         }
     }
 }
