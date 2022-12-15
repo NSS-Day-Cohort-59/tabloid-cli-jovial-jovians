@@ -63,11 +63,37 @@ namespace TabloidCLI.Repositories
        
         public void Update(Blog entry)
         {
-            throw new NotImplementedException();
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"Update Blog
+                                         SET Title = @title,
+                                         URL = @url                                      
+                                         WHERE Id = @id";
+                    cmd.Parameters.AddWithValue("@title", entry.Title);
+                    cmd.Parameters.AddWithValue("@url", entry.Url);
+                    cmd.Parameters.AddWithValue("@id", entry.Id);
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            {
+                using (SqlConnection conn = Connection)
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = conn.CreateCommand())
+                    {
+                        cmd.CommandText = @"DELETE FROM Blog WHERE id = @id";
+                        cmd.Parameters.AddWithValue("@id", id);
+
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
         }
 
 
