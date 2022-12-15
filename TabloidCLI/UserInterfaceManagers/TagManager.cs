@@ -91,7 +91,21 @@ namespace TabloidCLI.UserInterfaceManagers
 
         private void Remove()
         {
-            throw new NotImplementedException();
+            {
+                List<Tag> tags = _tagRepo.GetAll();
+                Console.WriteLine("Choose which blog you would like to delete:");
+                Console.WriteLine("");
+
+                foreach (Tag tag in tags)
+                {
+                    Console.WriteLine($"{tag.Id}: {tag.Name}");
+                }
+                Console.WriteLine("");
+                int tagToDelete = int.Parse(Console.ReadLine());
+                Console.WriteLine("");
+
+                _tagRepo.Delete(tagToDelete);
+            }
         }
     }
 }
