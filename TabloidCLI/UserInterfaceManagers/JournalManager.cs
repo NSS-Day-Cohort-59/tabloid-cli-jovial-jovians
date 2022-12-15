@@ -24,6 +24,7 @@ namespace TabloidCLI.UserInterfaceManagers
         {
             Console.WriteLine("Jourtnal Menu");
             Console.WriteLine(" 3) Add Jurnal Entry");
+            Console.WriteLine(" 4) Edit Journal Entry");
             Console.WriteLine(" 0) Go Back");
 
             Console.Write("> ");
@@ -34,6 +35,8 @@ namespace TabloidCLI.UserInterfaceManagers
                 case "3":
                     Add();
                     return this;
+                case "4":
+
                 case "0":
                     return _parentUI;
                 default:
