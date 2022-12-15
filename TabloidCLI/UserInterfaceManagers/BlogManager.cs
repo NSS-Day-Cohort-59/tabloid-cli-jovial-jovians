@@ -23,6 +23,7 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine("Blog Menu");
             Console.WriteLine(" 1) List Blogs");
             Console.WriteLine(" 2) Add Blog");
+            Console.WriteLine(" 4) Edit Blog");
             Console.WriteLine(" 0) Go Back");
 
             Console.Write("> ");
