@@ -33,6 +33,19 @@ namespace TabloidCLI.UserInterfaceManagers
                     string blogTitle = Console.ReadLine();
                     Console.WriteLine("Enter the URL.");
                     string blogURL = Console.ReadLine();
+
+                    Blog newBlog = new Blog()
+                    {
+                        Title = blogTitle,
+                        Url = blogURL
+                    };
+
+                    _blogRepository.Insert(newBlog);
+
+                    Console.WriteLine("Blog saved!");
+                    Console.ReadKey();
+
+
                     return this;
 
                 case "0":
