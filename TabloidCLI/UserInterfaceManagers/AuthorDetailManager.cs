@@ -75,9 +75,11 @@ namespace TabloidCLI.UserInterfaceManagers
             List<Post> posts = _postRepository.GetByAuthor(_authorId);
             foreach (Post post in posts)
             {
-                Console.WriteLine(post);
+                Console.WriteLine(@$"Blog: {post.Blog.Title}
+    Post: {post.Title} / {post.Url}");
             }
-            Console.WriteLine();
+            Console.WriteLine("Pess any key to go back");
+            Console.ReadKey();
         }
 
         private void AddTag()
