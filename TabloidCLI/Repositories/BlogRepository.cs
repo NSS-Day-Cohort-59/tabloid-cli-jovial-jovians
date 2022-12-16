@@ -47,11 +47,13 @@ namespace TabloidCLI.Repositories
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"SELECT *
-                                          FROM Blog
-                                          Where Id = @id";
+                    cmd.CommandText = @"SELECT b.Id AS BlogId, b.Title, b.URL, t.Id AS TagId, t.Name
+                                          FROM Blog b
+                                          LEFT JOIN BlogTag bt ON bt.BlogId = b.Id
+                                          LEFT JOIN Tag t ON bt.TagId = t.Id
+                                          Where b.Id = @id";
                     cmd.Parameters.AddWithValue("@id", id);
-                 
+
 
                     Blog blog = null;
 
@@ -63,10 +65,10 @@ namespace TabloidCLI.Repositories
                         {
                             blog = new Blog()
                             {
-                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                Id = reader.GetInt32(reader.GetOrdinal("BlogId")),
                                 Title = reader.GetString(reader.GetOrdinal("Title")),
                                 Url = reader.GetString(reader.GetOrdinal("URL"))
-                                
+
                             };
                         }
 
@@ -75,7 +77,7 @@ namespace TabloidCLI.Repositories
                             blog.Tags.Add(new Tag()
                             {
                                 Id = reader.GetInt32(reader.GetOrdinal("TagId")),
-                                Name = reader.GetString(reader.GetOrdinal("Name")),
+                                Name = reader.GetString(reader.GetOrdinal("Name"))
                             });
                         }
                     }
@@ -97,13 +99,13 @@ namespace TabloidCLI.Repositories
                                                      VALUES (@blogTitle, @URL)";
                     cmd.Parameters.AddWithValue("@blogTitle", blog.Title);
                     cmd.Parameters.AddWithValue("@URL", blog.Url);
-                    
+
 
                     cmd.ExecuteNonQuery();
                 }
             }
         }
-       
+
         public void Update(Blog entry)
         {
             using (SqlConnection conn = Connection)
@@ -155,6 +157,6 @@ namespace TabloidCLI.Repositories
         }
 
 
-       
+
     }
 }
