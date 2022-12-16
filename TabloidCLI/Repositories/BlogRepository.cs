@@ -46,9 +46,11 @@ namespace TabloidCLI.Repositories
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"SELECT *
-                                          FROM Blog
-                                          Where Id = @id";
+                    cmd.CommandText = @"SELECT b.Id AS BlogId, b.Title, b.URL, t.Id AS TagId, t.Name
+                                          FROM Blog b
+                                          LEFT JOIN BlogTag bt ON bt.BlogId = b.Id
+                                          LEFT JOIN Tag t ON bt.TagId = t.Id
+                                          Where b.Id = @id";
                     cmd.Parameters.AddWithValue("@id", id);
                  
 
@@ -62,11 +64,20 @@ namespace TabloidCLI.Repositories
                         {
                             blog = new Blog()
                             {
-                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                Id = reader.GetInt32(reader.GetOrdinal("BlogId")),
                                 Title = reader.GetString(reader.GetOrdinal("Title")),
                                 Url = reader.GetString(reader.GetOrdinal("URL"))
                                 
                             };
+                        }
+
+                        if (!reader.IsDBNull(reader.GetOrdinal("TagId"))) 
+                        {
+                            blog.Tags.Add(new Tag()
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("TagId")),
+                                Name = reader.GetString(reader.GetOrdinal("Name"))
+                            });
                         }
                     }
 

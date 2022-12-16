@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using TabloidCLI.Models;
 using TabloidCLI.Repositories;
 
@@ -59,8 +60,11 @@ namespace TabloidCLI.UserInterfaceManagers
         private void View()
         {
             Blog blog = _blogRepository.Get(_blogId);
-            Console.WriteLine($"Titile: {blog.Title}");
+            Console.WriteLine($"Title: {blog.Title}");
             Console.WriteLine($"Url: {blog.Url}");
+            Console.Write($"Tags: ");
+            string tagString = string.Join(", ", blog.Tags);
+            Console.WriteLine(tagString);
             Console.WriteLine("Press enter to go back:");
             Console.ReadLine();
         }
