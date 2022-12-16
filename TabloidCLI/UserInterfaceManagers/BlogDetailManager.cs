@@ -44,7 +44,7 @@ namespace TabloidCLI.UserInterfaceManagers
 
                     return this;
                 case "3":
-
+                    RemoveTag();
                     return this;
                 case "4":
 
@@ -67,6 +67,29 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine(tagString);
             Console.WriteLine("Press enter to go back:");
             Console.ReadLine();
+        }
+
+        private void RemoveTag()
+        {
+            Blog blog = _blogRepository.Get(_blogId);
+            for (int i = 1;  i <= blog.Tags.Count; i++)
+            {
+                Console.WriteLine($" {i}) { blog.Tags[i - 1]}");
+            }
+            Console.Write("Choose a tag to remove from this blog > ");
+            try
+            {
+                int tagIndex = int.Parse(Console.ReadLine()) - 1;
+                int tagId = blog.Tags[tagIndex].Id;
+                _blogRepository.DeleteBlogTag(_blogId, tagId);
+                Console.WriteLine("Tag removed");
+                Console.ReadKey();
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Invalid selection, please try again");
+            }
+
         }
 
 
