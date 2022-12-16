@@ -40,6 +40,8 @@ namespace TabloidCLI.UserInterfaceManagers
                     View();
                     return this;
                 case "2":
+                    AddTag();
+                    return this;
                 case "3":
                 case "4":
                 case "0":
@@ -59,6 +61,38 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine("Press enter to go back:");
             Console.ReadLine();
         }
-       
+
+        private void AddTag()
+        {
+            Post post = _postRepository.Get(_postId);
+
+            Console.WriteLine($"Which tag would you like to add to {post.Title}?");
+            List<Tag> tags = _tagRepository.GetAll();
+
+            for (int i = 0; i < tags.Count; i++)
+            {
+                Tag tag = tags[i];
+                Console.WriteLine($" {i + 1}) {tag.Name}");
+            }
+            Console.Write("> ");
+
+            string input = Console.ReadLine();
+            try
+            {
+                int choice = int.Parse(input);
+                Tag tag = tags[choice - 1];
+                _postRepository.InsertTag(post, tag);
+                Console.WriteLine("Tag has been added!");
+                Console.ReadKey();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Invalid Selection. Won't add any tags.");
+                Console.ReadKey();
+            }
+        }
+
+
+
     }
 }
