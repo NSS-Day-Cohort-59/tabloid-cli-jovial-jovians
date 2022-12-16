@@ -25,6 +25,7 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine(" 2) Add Blog");
             Console.WriteLine(" 4) Edit Blog");
             Console.WriteLine(" 3) Remove Blog");
+            Console.WriteLine(" 5) Blog Details");
             Console.WriteLine(" 0) Go Back");
 
             Console.Write("> ");
@@ -39,13 +40,26 @@ namespace TabloidCLI.UserInterfaceManagers
                     Add();
 
                     return this;
+                case "3":
+                    Remove();
+
+                    return this;
                 case "4":
                     Edit();
 
                     return this;
 
-                case "3":
-                    Remove();
+                case "5":
+                    Blog blog = Choose();
+                    if (blog == null)
+                    {
+                        return this;
+                    }
+                    else
+                    {
+                        return new BlogDetailManager(this, _connectionString, blog.Id);
+                    }
+                    ;
 
                     return this;
 

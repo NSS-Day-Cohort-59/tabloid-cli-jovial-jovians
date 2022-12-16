@@ -67,6 +67,7 @@ namespace TabloidCLI.UserInterfaceManagers
                 Console.WriteLine(" " + tag);
             }
             Console.WriteLine();
+            Console.ReadKey();
         }
 
         private void ViewBlogPosts()
@@ -99,6 +100,8 @@ namespace TabloidCLI.UserInterfaceManagers
                 int choice = int.Parse(input);
                 Tag tag = tags[choice - 1];
                 _authorRepository.InsertTag(author, tag);
+                Console.WriteLine("Tag has been added!");
+                Console.ReadKey();
             }
             catch (Exception ex)
             {
