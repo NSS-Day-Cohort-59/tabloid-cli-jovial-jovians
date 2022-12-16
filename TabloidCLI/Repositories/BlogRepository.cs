@@ -87,6 +87,7 @@ namespace TabloidCLI.Repositories
                 }
             }
         }
+       
         public void Insert(Blog blog)
         {
             using (SqlConnection conn = Connection)

@@ -47,6 +47,7 @@ namespace TabloidCLI.UserInterfaceManagers
 
                     return this;
                 case "4":
+                    ViewBlogPosts();
 
                     return this;
                 case "0":
@@ -97,7 +98,18 @@ namespace TabloidCLI.UserInterfaceManagers
             }
         }
 
-
+        private void ViewBlogPosts()
+        {
+            List<Post> posts = _postRepository.GetByBlog(_blogId);
+            foreach (Post post in posts)
+            {
+                Console.WriteLine(@$"
+    Post: {post.Title} / {post.Url}");
+            }
+            Console.WriteLine("---------------------------------------------------------------");
+            Console.WriteLine("Pess any key to go back");
+            Console.ReadKey();
+        }
 
 
     }
