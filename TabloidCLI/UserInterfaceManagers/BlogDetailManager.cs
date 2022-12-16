@@ -47,6 +47,7 @@ namespace TabloidCLI.UserInterfaceManagers
                     RemoveTag();
                     return this;
                 case "4":
+                    ViewBlogPosts();
 
                     return this;
                 case "0":
@@ -97,12 +98,24 @@ namespace TabloidCLI.UserInterfaceManagers
             }
         }
 
+        private void ViewBlogPosts()
+        {
+            List<Post> posts = _postRepository.GetByBlog(_blogId);
+            foreach (Post post in posts)
+            {
+                Console.WriteLine(@$"
+    Post: {post.Title} / {post.Url}");
+            }
+            Console.WriteLine("---------------------------------------------------------------");
+            Console.WriteLine("Pess any key to go back");
+            Console.ReadKey();
+        }
         private void RemoveTag()
         {
             Blog blog = _blogRepository.Get(_blogId);
-            for (int i = 1;  i <= blog.Tags.Count; i++)
+            for (int i = 1; i <= blog.Tags.Count; i++)
             {
-                Console.WriteLine($" {i}) { blog.Tags[i - 1]}");
+                Console.WriteLine($" {i}) {blog.Tags[i - 1]}");
             }
             Console.Write("Choose a tag to remove from this blog > ");
             try
