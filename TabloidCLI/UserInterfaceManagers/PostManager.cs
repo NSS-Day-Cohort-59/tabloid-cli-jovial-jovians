@@ -50,6 +50,9 @@ namespace TabloidCLI.UserInterfaceManagers
                     {
                         return new PostDetailManager(this, _connectionString, post.Id);
                     }
+                case "3":
+                    Add();
+                    return this;
                 case "4":
                     Edit();
                     return this;
@@ -72,6 +75,39 @@ namespace TabloidCLI.UserInterfaceManagers
             {
                 Console.WriteLine($"{p.Id}) {p.Title}  URL: {p.Url}");
             }
+            Console.Write("Press any key to continue...");
+            Console.ReadKey();
+        }
+
+        private void Add()
+        {
+            Console.WriteLine("New Post");
+            Post post = new Post();
+
+            Console.WriteLine();
+            Console.Write("Post title: ");
+
+            post.Title = Console.ReadLine();
+
+            Console.WriteLine();
+            Console.Write("Post URL: ");
+            post.Url = Console.ReadLine();
+
+            Console.WriteLine();
+            Author author = ChooseAuthor("Select an author:");
+            post.Author = author;
+
+            Console.WriteLine();
+            Blog blog = ChooseBlog("Select the name of the blog:");
+            post.Blog = blog;
+            
+            post.PublishDateTime = DateTime.Now;
+
+            _postRepository.Insert(post);
+
+            Console.WriteLine("");
+            Console.WriteLine("Great! Post added to database.");
+            Console.WriteLine("");
             Console.Write("Press any key to continue...");
             Console.ReadKey();
         }
