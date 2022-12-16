@@ -18,7 +18,7 @@ namespace TabloidCLI.UserInterfaceManagers
         {
             _parentUI = parentUI;
             _connectionString = connectionString;
-            _postRepository= new PostRepository(connectionString);
+            _postRepository = new PostRepository(connectionString);
             _authorRepository = new AuthorRepository(connectionString);
             _blogRepository = new BlogRepository(connectionString);
         }
@@ -40,6 +40,16 @@ namespace TabloidCLI.UserInterfaceManagers
                 case "1":
                     List();
                     return this;
+                case "2":
+                    Post post = ChoosePost();
+                    if (post == null)
+                    {
+                        return this;
+                    }
+                    else
+                    {
+                        return new PostDetailManager(this, _connectionString, post.Id);
+                    }
                 case "4":
                     Edit();
                     return this;
@@ -87,7 +97,7 @@ namespace TabloidCLI.UserInterfaceManagers
 
             Blog blogToEdit = ChooseBlog("Edit blog (blank to leave unchanged) : ");
             postToEdit.Blog = blogToEdit;
-            
+
             Console.Write("Edit URL (blank to leave unchanged) : ");
             string url = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(url))
